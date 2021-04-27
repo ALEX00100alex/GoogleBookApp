@@ -1,44 +1,44 @@
 const Router = require("express").Router();
-const db = require("../models/Book");
+const Book = require("../models/Book");
 
 
-// Router.get('/api/user/:googleId', async (req, res) => {
-//   // Grab req parameter
-//   const googleId = req.params.googleId
-//   db.Mood.find({googleId: googleId })
-//     .then(mood => res.json(mood))
-//     .catch(err => res.status(422).end());
-// })
+Router.post('/api/books', async (req,res) => {
+    // const title = req.body.title;
+    // const authors = req.body.authors;
+    // const description = req.body.description;
+    // const image = req.body.image;
+    // const link = req.body.link;
+    // Destructuring
+    const {title, authors, description, image, link} = req.body
+    try {
+        const book = await Book.create({
+            title, 
+            authors,
+            description,
+            image,
+            link
+        })
+        res.json(book)
+    } catch(error){
+        res.status(422).end()
+    }
+})
 
-// Router.post('/api/mood', async (req, res) => {
-//   // Grab info
-//   const googleId = req.body.googleId;
-//   const name = req.body.name;
-//   const expressions = req.body.expressions;
-//   console.log(req.body)
-//     db.Mood
-//       .findOneAndUpdate({ googleId: googleId }, {$push: {expressions: expressions}})
-//       .then(dbModel => res.json(dbModel))
-//       .catch(err => res.status(422).json(err));
-// })
-
-// Router.post('/api/user', async (req, res) => {
-//   // Grab info
-//   const googleId = req.body.googleId;
-//   const name = req.body.name;
-//   const expressions = req.body.expressions;
-//   console.log(req.body)
-//   db.Mood.create({
-//     name,
-//     googleId,
-//     expressions
-//   })
-//   .then(user => res.json(user))
-//   .catch(err => {
-//     console.log(err);
-//     res.status(422).end()
-//   });
-// })
-
+Router.get('/api/books', async (req, res) => {
+  // Grab req parameter
+  const {title, authors, description, image, link} = req.params
+  try {
+    const book = await Book.find({
+        title, 
+        authors,
+        description,
+        image,
+        link
+    })
+    res.json(book)
+} catch(error){
+    res.status(422).end()
+}
+})
 
 module.exports = Router;

@@ -27,7 +27,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './client/build/index.html'));
 });
 
-const uri = process.env.MONGODB_URI;
+const uri = process.env.NODE_ENV==="production" ? process.env.MONGODB_URI: "mongodb://localhost:27017/googlebooks"
 mongoose.connect(
   uri,
   { useNewUrlParser: true },
@@ -37,7 +37,6 @@ const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("MongoDB database connection established!")
 });
-
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);

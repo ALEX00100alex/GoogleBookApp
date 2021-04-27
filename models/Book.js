@@ -12,11 +12,11 @@ const bookSchema = new Schema({
        required: true
    },
    image: {
-       type: URL,
+       type: String,
        required: true
    },
    link: {
-       type: URL,
+       type: String,
        required: true
    },
     title: {
