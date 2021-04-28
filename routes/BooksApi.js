@@ -28,17 +28,22 @@ Router.get('/api/books', async (req, res) => {
   // Grab req parameter
   const {title, authors, description, image, link} = req.params
   try {
-    const book = await Book.find({
-        title, 
-        authors,
-        description,
-        image,
-        link
-    })
+    const book = await Book.find({})
     res.json(book)
 } catch(error){
     res.status(422).end()
 }
 })
+
+Router.delete('/api/books/:id', async (req,res) => {
+    const bookId = req.params.bookId
+    try {
+        const book = await Book.deleteOne({_id:bookId})
+        res.json(book)
+    } catch(error) {
+        res.status(422).end()
+    }
+})
+
 
 module.exports = Router;
